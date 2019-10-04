@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/pkbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Image" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="260dp"
+        android:layout_height="201dp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/sndbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Send to FPGA" />
+
+    <EditText
+        android:id="@+id/textView"
+        android:layout_width="404dp"
+        android:layout_height="165dp"
+        android:layout_marginBottom="56dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/len"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="largo" />
+
+    <EditText
+        android:id="@+id/macadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="00:18:E5:04:2E:2F" />
+
+</LinearLayout>
