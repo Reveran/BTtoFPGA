@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                 btimg = "";
 
-                startActivityForResult(intent.createChooser(intent, "Pick an Image"), 1);
+                startActivityForResult(Intent.createChooser(intent, "Pick an Image"), 1);
             }
         });
 
@@ -203,10 +203,23 @@ public class MainActivity extends AppCompatActivity {
 
             TextView len = findViewById(R.id.len);
 
-            for (int i = 0; i < 100; i++) {
-                for (int j = 0; j < 100; j++) {
+            for (int i = 0; i < 400; i++) {
+                for (int j = 0; j < 400; j++) {
                     btimg = btimg + RGBreturnALT(bitmap,j,i);
                 }
+            }
+            try
+            {
+                OutputStreamWriter fout=
+                        new OutputStreamWriter(
+                                openFileOutput("int.txt", Context.MODE_PRIVATE));
+
+                fout.write(btimg);
+                fout.close();
+            }
+            catch (Exception ex)
+            {
+                Log.e("Ficheros", "Error al escribir fichero a memoria interna");
             }
 
             editText.setText(btimg);
@@ -229,14 +242,14 @@ public class MainActivity extends AppCompatActivity {
 
     public String[] RGBreturn(Bitmap img, int x, int y){
         int pix = img.getPixel(x, y);
-        String h[] = new String [3];
+        String[] h = new String[3];
         h[0] = "00" + Integer.toBinaryString((int)(((pix>>16)&0xFF)*0.028));
         h[1] = "00" + Integer.toBinaryString((int)(((pix>>8)&0xFF)*0.028));
         h[2] = "00" + Integer.toBinaryString((int)((pix&0xFF)*0.028));
 
-        h[0] = h[0].substring(h[0].length()-3,h[0].length());
-        h[1] = h[1].substring(h[1].length()-3,h[1].length());
-        h[2] = h[2].substring(h[2].length()-3,h[2].length());
+        h[0] = h[0].substring(h[0].length()-3);
+        h[1] = h[1].substring(h[1].length()-3);
+        h[2] = h[2].substring(h[2].length()-3);
         return h;
     }
 
@@ -251,10 +264,10 @@ public class MainActivity extends AppCompatActivity {
             R = 32;
         }
         if (G == 0){
-            R = 4;
+            G = 4;
         }
         if (B == 0){
-            R = 1;
+            B = 1;
         }
 
         PixelChar = (char)(R+G+B);
