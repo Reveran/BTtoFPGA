@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.BitSet;
 import java.util.UUID;
 
@@ -205,39 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     btimg = btimg + RGBreturnALT(bitmap,j,i);
                 }
             }
-/*            int counter = 1;
-            for (int line = 0; line < 63; line++) {
-                for (int pixel = 0; pixel < 63; pixel++) {
-                    for (int i = 0; i < 3; i++) {
 
-                        int Red = RGBreturnALT(bitmap, line, pixel)[i];
-
-                        if (Red == 1) bits.set(counter + 2, true);
-                        else if (Red == 10) bits.set(counter + 1, true);
-                        else if (Red == 11) {
-                            bits.set(counter + 1, true);
-                            bits.set(counter + 2, true);
-                        } else if (Red == 100) bits.set(counter, true);
-                        else if (Red == 101) {
-                            bits.set(counter, true);
-                            bits.set(counter + 2, true);
-                        } else if (Red == 111){
-                            bits.set(counter, true);
-                            bits.set(counter + 1, true);
-                            bits.set(counter + 2, true);
-                        }
-
-                        counter += 3;
-                    }
-                }
-            }*/
-            /*for (int line = 0; line < 100; line++) {
-                for (int pixel = 0; pixel < 100; pixel++) {
-                    btimg = btimg + (RGBreturn(bitmap, pixel, line)[0]) + (RGBreturn(bitmap, pixel, line)[1]) + (RGBreturn(bitmap, pixel, line)[2]);
-                }
-            }*/
-
-            //btimg = new String(bits.toByteArray());
             editText.setText(btimg);
 
             len.setText("" + btimg.length());
@@ -273,9 +244,19 @@ public class MainActivity extends AppCompatActivity {
         int pix = img.getPixel(x, y);
         int R,G,B;
         char PixelChar;
-        R = (int)(((pix>>21)&0x7)<<5);
-        G = (int)(((pix>>13)&0x7)<<3);
-        B = (int)((pix>>6)&0x3);
+        R = (((pix>>21)&0x7)<<5);
+        G = (((pix>>13)&0x7)<<2);
+        B = ((pix>>6)&0x3);
+        if (R == 0){
+            R = 32;
+        }
+        if (G == 0){
+            R = 4;
+        }
+        if (B == 0){
+            R = 1;
+        }
+
         PixelChar = (char)(R+G+B);
         return PixelChar;
     }
