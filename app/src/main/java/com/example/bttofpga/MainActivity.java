@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.BitSet;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -155,8 +156,16 @@ public class MainActivity extends AppCompatActivity {
                 EditText editText = findViewById(R.id.textView);
                 if(estado ) {
                     String dato = editText.getText().toString();
-                    MyConexionBT.write(dato);
-                    Toast.makeText(MainActivity.this, "Dato Enviado: " + dato, Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < 19200; i++) {
+                        try {
+                            MyConexionBT.write(dato.substring(i, i + 1));
+                            TimeUnit.NANOSECONDS.sleep(1000000);
+                        } catch (Exception e) {
+                            Toast.makeText(MainActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+
+                        }
+                        //Toast.makeText(MainActivity.this, "Dato Enviado: " + dato, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
 
@@ -203,8 +212,8 @@ public class MainActivity extends AppCompatActivity {
 
             TextView len = findViewById(R.id.len);
 
-            for (int i = 0; i < 400; i++) {
-                for (int j = 0; j < 400; j++) {
+            for (int i = 0; i < 120; i++) {
+                for (int j = 0; j < 160; j++) {
                     btimg = btimg + RGBreturnALT(bitmap,j,i);
                 }
             }
@@ -236,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
         UCrop ucrop = UCrop.of(bitmap, Uri.fromFile(new File(getCacheDir(),desrfilename)))
                 .withAspectRatio(4, 3)
-                .withMaxResultSize(640, 480);
+                .withMaxResultSize(160, 120);
         ucrop.start(MainActivity.this);
     }
 
